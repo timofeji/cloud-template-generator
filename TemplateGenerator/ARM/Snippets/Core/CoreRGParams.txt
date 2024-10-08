@@ -1,0 +1,36 @@
+﻿{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_VMDrop1_name": {
+            "value": null
+        },
+        "virtualNetworks_DropVPN1_name": {
+            "value": null
+        },
+        "storageAccounts_rgdrop1diag_name": {
+            "value": null
+        },
+        "registries_DropACR_name": {
+            "value": null
+        },
+        "networkInterfaces_vmdrop1630_name": {
+            "value": null
+        },
+        "publicIPAddresses_VMDrop1_ip_name": {
+            "value": null
+        },
+        "networkSecurityGroups_NSGDrop1_name": {
+            "value": null
+        },
+        "managedClusters_DropKube1_name": {
+            "value": null
+        },
+        "workspaces_DefaultWorkspace_201800e7_10a5_433c_b48a_09d61e6280b2_EUS_externalid": {
+            "value": null
+        },
+        "publicIPAddresses_d29e8dcb_4c74_43d9_94d9_71a01a9167f9_externalid": {
+            "value": null
+        }
+    }
+}

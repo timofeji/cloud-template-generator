@@ -1,0 +1,13 @@
+﻿                    {
+                        "name": "AllowRD",
+                        "properties": {
+                            "access": "Allow",
+                            "priority": 201,
+                            "direction": "Inbound",
+                            "protocol": "Tcp",
+                            "sourceAddressPrefix": "CorpNetSaw",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "3389"
+                        }
+                    }

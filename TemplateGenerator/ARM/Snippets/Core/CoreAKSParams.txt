@@ -1,0 +1,21 @@
+﻿{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "loadBalancers_kubernetes_name": {
+            "value": null
+        },
+        "virtualNetworks_aks_vnet_21060789_name": {
+            "value": null
+        },
+        "routeTables_aks_agentpool_21060789_routetable_name": {
+            "value": null
+        },
+        "networkSecurityGroups_aks_agentpool_21060789_nsg_name": {
+            "value": null
+        },
+        "publicIPAddresses_d29e8dcb_4c74_43d9_94d9_71a01a9167f9_name": {
+            "value": null
+        }
+    }
+}

@@ -1,0 +1,29 @@
+		  "location":  ***location***,
+		  "networkInterfaceName": ***networkInterfaceName***,
+		  "networkSecurityGroupName":  ***networkSecurityGroupName***,
+			"networkSecurityGroupRules":  [***NSGR***],
+		  "subnetName":  ***subnetName***,
+		  "virtualNetworkName":  ***virtualNetworkName***,
+			"addressPrefixes":  ["10.1.0.0/24"],
+			"subnets": [
+				  {
+					"name": ***subnetName***,
+					"properties": {
+					  "addressPrefix": "10.1.0.0/24"
+					}
+				  }
+				],
+			"publicIpAddressName":  ***publicIpAddressName***,
+			"publicIpAddressType":"Dynamic",
+			"publicIpAddressSku":"Basic",
+			"virtualMachineName": ***virtualMachineName***,
+			"virtualMachineRG":  ***virtualMachineRG***,
+			"osDiskType": ***osDiskType***,
+			"virtualMachineSize": ***virtualMachineSize***,
+			"adminUsername": ***adminUsername***,
+			"adminPassword":  ***adminPassword***,
+			"diagnosticsStorageAccountName": ***diagnosticsStorageAccountName***,
+			"diagnosticsStorageAccountId":  ***diagnosticsStorageAccountId***,
+			"diagnosticsStorageAccountType":  ***diagnosticsStorageAccountType***,
+			"diagnosticsStorageAccountKind":  "Storage",
+   

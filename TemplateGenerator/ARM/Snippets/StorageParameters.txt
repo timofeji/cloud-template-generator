@@ -1,0 +1,16 @@
+﻿	  creates an Azure storage resource||		"storageAccountName": ***storageAccountName***,
+		"storageSKU": {
+			"name": ***storageSKUName***,
+			"restrictions": [
+				{
+				"reasonCode": ***storageSKURestrictionReasonCode***
+				}
+			]
+			},
+		"storageKind": ***storageKind***,
+		"storageLocation": ***storageLocation***,
+		"storageTags":  ***storageTags***,
+		"storageIdentity": {
+			"type": "SystemAssigned"
+			},
+		"storageProperties":  ***storageProperties***,

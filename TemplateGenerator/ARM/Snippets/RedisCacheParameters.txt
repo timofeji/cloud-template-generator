@@ -1,0 +1,9 @@
+﻿	  creates an Azure Redis Cache resource||
+		"cacheSKUName": ***cacheSKUName***,
+		"cacheSKUFamily": ***cacheSKUFamily***,
+		"cacheSKUCapacity":   ***cacheSKUCapacity***,    
+		"redisCacheLocation":  ***redisCacheLocation***,
+		"enableNonSslPort": ***enableNonSslPort***,	
+		"diagnosticsStatus":  ***diagnosticsStatus***,
+		"existingDiagnosticsStorageAccountName": ***existingDiagnosticsStorageAccountName***,
+	

@@ -1,0 +1,9 @@
+﻿	{
+		"type": "Microsoft.Storage/storageAccounts",
+		"apiVersion": "[parameters('apiVersion')]",
+		"name": "[parameters('storageAccountName')]",
+		"location": "[parameters('storageLocation')]",
+		"sku": "[parameters('storageSKU')]",
+		"kind": "[parameters('storageKind')]",
+		"properties": {}
+	}

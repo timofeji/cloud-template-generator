@@ -1,0 +1,28 @@
+﻿    "appName": {
+      "type": "String",
+      "defaultValue": "_MY_APP_NAME_"
+    },
+    "dockerImageName": {
+      "type": "String",
+      "defaultValue": "_MY_REGISTRY_USERNAME_-on.azurecr.io/_MY_NAMESPACE_/_MY_DOCKER_IMAGE_NAME_:latest"
+    },
+    "dockerRegistryUrl": {
+      "type": "String",
+      "defaultValue": "https://_MY_REGISTRY_USERNAME_-on.azurecr.io"
+    },
+    "dockerRegistryUsername": {
+      "type": "String",
+      "defaultValue": "_MY_REGISTRY_USERNAME_"
+    },
+    "dockerRegistryPassword": {
+      "type": "String",
+      "defaultValue": "_MY_REGISTRY_PSW_"
+    },
+    "servicePlanName": {
+      "type": "String",
+      "defaultValue": "_MY_SERVICE_PLAN_NAME_"
+    },
+    "appLocation": {
+      "type": "String",
+      "defaultValue": "_MY_REGION_"
+    }

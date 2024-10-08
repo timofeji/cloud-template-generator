@@ -1,0 +1,13 @@
+﻿                    {
+                        "name": "AllowSyncWithAzureAD",
+                        "properties": {
+                            "access": "Allow",
+                            "priority": 101,
+                            "direction": "Inbound",
+                            "protocol": "Tcp",
+                            "sourceAddressPrefix": "AzureActiveDirectoryDomainServices",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "443"
+                        }
+                    }

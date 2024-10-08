@@ -1,0 +1,77 @@
+﻿	{
+            "type": "Microsoft.AAD/DomainServices",
+            "apiVersion": "[parameters('apiVersion')]",
+            "name": "[parameters('domainName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]"
+            ],
+            "properties": {
+                "domainName": "[parameters('domainName')]",
+                "subnetId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', parameters('vnetName'), '/subnets/', parameters('subnetName'))]",
+                "filteredSync": "[parameters('filteredSync')]",
+                "domainConfigurationType": "[parameters('domainConfigurationType')]",
+                "notificationSettings": "[parameters('notificationSettings')]"
+            }
+        },
+        {
+            "type": "Microsoft.Network/NetworkSecurityGroups",
+            "name": "[parameters('nsgName')]",
+            "location": "[parameters('location')]",
+            "apiVersion": "[parameters('apiVersion')]",
+            "properties": {
+                "securityRules": [
+                    ***NSGR***
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('vnetName')]",
+            "location": "[parameters('location')]",
+            "apiVersion": "[parameters('apiVersion')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/NetworkSecurityGroups/', parameters('nsgName'))]"
+            ],
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": "[parameters('vnetAddressPrefixes')]"
+                },
+                "subnets": [
+                    {
+                        "name": "[parameters('subnetName')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('subnetAddressPrefix')]",
+                            "networkSecurityGroup": {
+                                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/NetworkSecurityGroups/', parameters('nsgName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+           "type": "Microsoft.Compute/virtualMachines/extensions",
+           "name": "[concat(parameters('dnsLabelPrefix'),'/joindomain')]",
+           "location": "[parameters('location')]",
+           "apiVersion":"[parameters('apiVersion')]",
+           "dependsOn": [
+			"[concat('Microsoft.Compute/virtualMachines/', parameters('dnsLabelPrefix'))]"
+           ],
+           "properties": {
+			"publisher": "Microsoft.Compute",
+			"type": "JsonADDomainExtension",
+			"typeHandlerVersion": "1.3",
+			"autoUpgradeMinorVersion": true,
+			"settings": {
+	           "Name": "[parameters('domainToJoin')]",
+	           "OUPath": "[parameters('ouPath')]",
+	           "User": "[concat(parameters('domainToJoin'), '\\', parameters('domainUsername'))]",
+	           "Restart": "true",
+	           "Options": "[parameters('domainJoinOptions')]"
+			},
+			"protectedSettings": {
+	           "Password": "[parameters('domainPassword')]"
+			}
+		}
+    }

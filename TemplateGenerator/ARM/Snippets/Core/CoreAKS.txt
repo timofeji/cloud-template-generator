@@ -1,0 +1,259 @@
+﻿{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "loadBalancers_kubernetes_name": {
+            "defaultValue": "kubernetes",
+            "type": "String"
+        },
+        "virtualNetworks_aks_vnet_21060789_name": {
+            "defaultValue": "aks-vnet-21060789",
+            "type": "String"
+        },
+        "routeTables_aks_agentpool_21060789_routetable_name": {
+            "defaultValue": "aks-agentpool-21060789-routetable",
+            "type": "String"
+        },
+        "networkSecurityGroups_aks_agentpool_21060789_nsg_name": {
+            "defaultValue": "aks-agentpool-21060789-nsg",
+            "type": "String"
+        },
+        "publicIPAddresses_d29e8dcb_4c74_43d9_94d9_71a01a9167f9_name": {
+            "defaultValue": "d29e8dcb-4c74-43d9-94d9-71a01a9167f9",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2020-03-01",
+            "name": "[parameters('networkSecurityGroups_aks_agentpool_21060789_nsg_name')]",
+            "location": "eastus",
+            "properties": {
+                "securityRules": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2020-03-01",
+            "name": "[parameters('publicIPAddresses_d29e8dcb_4c74_43d9_94d9_71a01a9167f9_name')]",
+            "location": "eastus",
+            "tags": {
+                "owner": "kubernetes",
+                "type": "aks-slb-managed-outbound-ip"
+            },
+            "sku": {
+                "name": "Standard"
+            },
+            "properties": {
+                "ipAddress": "40.88.17.58",
+                "publicIPAddressVersion": "IPv4",
+                "publicIPAllocationMethod": "Static",
+                "idleTimeoutInMinutes": 30,
+                "ipTags": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/routeTables",
+            "apiVersion": "2020-03-01",
+            "name": "[parameters('routeTables_aks_agentpool_21060789_routetable_name')]",
+            "location": "eastus",
+            "properties": {
+                "disableBgpRoutePropagation": false,
+                "routes": [
+                    {
+                        "name": "aks-agentpool-21060789-vmss000002",
+                        "properties": {
+                            "addressPrefix": "10.244.0.0/24",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.240.0.6"
+                        }
+                    },
+                    {
+                        "name": "aks-agentpool-21060789-vmss000001",
+                        "properties": {
+                            "addressPrefix": "10.244.1.0/24",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.240.0.5"
+                        }
+                    },
+                    {
+                        "name": "aks-agentpool-21060789-vmss000000",
+                        "properties": {
+                            "addressPrefix": "10.244.2.0/24",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.240.0.4"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/loadBalancers",
+            "apiVersion": "2020-03-01",
+            "name": "[parameters('loadBalancers_kubernetes_name')]",
+            "location": "eastus",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_d29e8dcb_4c74_43d9_94d9_71a01a9167f9_name'))]"
+            ],
+            "sku": {
+                "name": "Standard"
+            },
+            "properties": {
+                "frontendIPConfigurations": [
+                    {
+                        "name": "1-d29e8dcb-4c74-43d9-94d9-71a01a9167f9",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_d29e8dcb_4c74_43d9_94d9_71a01a9167f9_name'))]"
+                            },
+                            "privateIPAddressVersion": "IPv4"
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "aksOutboundBackendPool",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "outboundRules": [
+                                {
+                                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_kubernetes_name')), '/outboundRules/aksOutboundRule')]"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "[parameters('loadBalancers_kubernetes_name')]",
+                        "properties": {
+                            "provisioningState": "Succeeded"
+                        }
+                    }
+                ],
+                "loadBalancingRules": [],
+                "probes": [],
+                "inboundNatRules": [],
+                "outboundRules": [
+                    {
+                        "name": "aksOutboundRule",
+                        "properties": {
+                            "allocatedOutboundPorts": 0,
+                            "protocol": "All",
+                            "enableTcpReset": true,
+                            "idleTimeoutInMinutes": 30,
+                            "backendAddressPool": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_kubernetes_name')), '/backendAddressPools/aksOutboundBackendPool')]"
+                            },
+                            "frontendIPConfigurations": [
+                                {
+                                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_kubernetes_name')), '/frontendIPConfigurations/1-d29e8dcb-4c74-43d9-94d9-71a01a9167f9')]"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "inboundNatPools": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2020-03-01",
+            "name": "[concat(parameters('routeTables_aks_agentpool_21060789_routetable_name'), '/aks-agentpool-21060789-vmss000000')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_aks_agentpool_21060789_routetable_name'))]"
+            ],
+            "properties": {
+                "addressPrefix": "10.244.2.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.240.0.4"
+            }
+        },
+        {
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2020-03-01",
+            "name": "[concat(parameters('routeTables_aks_agentpool_21060789_routetable_name'), '/aks-agentpool-21060789-vmss000001')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_aks_agentpool_21060789_routetable_name'))]"
+            ],
+            "properties": {
+                "addressPrefix": "10.244.1.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.240.0.5"
+            }
+        },
+        {
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2020-03-01",
+            "name": "[concat(parameters('routeTables_aks_agentpool_21060789_routetable_name'), '/aks-agentpool-21060789-vmss000002')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_aks_agentpool_21060789_routetable_name'))]"
+            ],
+            "properties": {
+                "addressPrefix": "10.244.0.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.240.0.6"
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2020-03-01",
+            "name": "[parameters('virtualNetworks_aks_vnet_21060789_name')]",
+            "location": "eastus",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_aks_agentpool_21060789_nsg_name'))]",
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_aks_agentpool_21060789_routetable_name'))]"
+            ],
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.0.0.0/8"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "aks-subnet",
+                        "properties": {
+                            "addressPrefix": "10.240.0.0/16",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_aks_agentpool_21060789_nsg_name'))]"
+                            },
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_aks_agentpool_21060789_routetable_name'))]"
+                            },
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    }
+                ],
+                "virtualNetworkPeerings": [],
+                "enableDdosProtection": false,
+                "enableVmProtection": false
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "apiVersion": "2020-03-01",
+            "name": "[concat(parameters('virtualNetworks_aks_vnet_21060789_name'), '/aks-subnet')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_aks_vnet_21060789_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_aks_agentpool_21060789_nsg_name'))]",
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_aks_agentpool_21060789_routetable_name'))]"
+            ],
+            "properties": {
+                "addressPrefix": "10.240.0.0/16",
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_aks_agentpool_21060789_nsg_name'))]"
+                },
+                "routeTable": {
+                    "id": "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_aks_agentpool_21060789_routetable_name'))]"
+                },
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+            }
+        }
+    ]
+}

@@ -1,0 +1,4 @@
+﻿		"vnetId": "[resourceId('RGDrop1','Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
+        "publicIPRef": "[resourceId('Microsoft.Network/publicIPAddresses/', parameters('publicIpAddressName'))]",
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
+        "applicationGatewayId": "[resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewayName'))]"

@@ -1,0 +1,29 @@
+﻿{
+            "type": "Microsoft.ContainerRegistry/registries",
+            "apiVersion": "[parameters('apiVersion')]",
+            "name": "[parameters('registries_dropacr_name')]",
+            "location": "eastus",
+            "sku": {
+                "name": "Standard",
+                "tier": "Standard"
+            },
+            "properties": {
+                "adminUserEnabled": false,
+                "policies": {
+                    "quarantinePolicy": {
+                        "status": "disabled"
+                    },
+                    "trustPolicy": {
+                        "type": "Notary",
+                        "status": "disabled"
+                    },
+                    "retentionPolicy": {
+                        "days": 7,
+                        "status": "disabled"
+                    }
+                },
+                "encryption": {
+                    "status": "disabled"
+                },
+                "dataEndpointEnabled": false
+            }

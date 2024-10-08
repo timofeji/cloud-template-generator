@@ -1,0 +1,29 @@
+﻿creates an Azure AD DS managed domain and the supporting virtual network, subnet, and network security group rules. 
+The network security group rules are required to secure the managed domain and make sure traffic can flow correctly. 
+A user forest with the DNS name of aaddscontoso.com is created, with all users synchronized from Azure AD||        "apiVersion": ***apiVersion***,
+        "domainConfigurationType":  "FullySynced",
+        "domainName":  ***domainName***,
+        "domainToJoin": ***domainToJoin***,
+        "domainUsername": ***domainUsername***,
+        "domainPassword":  ***domainPassword***,
+        "domainJoinOptions":  ***domainJoinOptions***,
+        "filteredSync":  ***filteredSync***,
+        "location":  ***location***,
+        "notificationSettings": {
+            "value": {
+                "notifyGlobalAdmins": "Enabled",
+                "notifyDcAdmins": "Enabled",
+                "additionalRecipients": ***additionalRecipients***
+            }
+        },
+        "subnetName":  ***subnetName***,
+        "vnetName":  ***vnetName***,
+        "vnetAddressPrefixes": {
+            "value": [
+                ***vnetAddressPrefixes***
+            ]
+        },
+        "subnetAddressPrefix": ***subnetAddressPrefix***,
+        "dnsLabelPrefix":  ***dnsLabelPrefix***,
+        "ouPath": ***ouPath***,
+        "nsgName":   ***nsgName***,

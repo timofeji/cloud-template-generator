@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EAF35287-0ECD-4EF1-A60D-A791B882BBA3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TemplateGenerator</RootNamespace>
+    <AssemblyName>TemplateGenerator</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ARM\ARMConfig.cs" />
+    <Compile Include="ARM\ARMTemplate.cs" />
+    <Compile Include="ARM\ARMTemplateMaster.cs" />
+    <Compile Include="ARM\AzureResourceProviderProperties.cs" />
+    <Compile Include="ARM\AzureResourceProviders.cs" />
+    <Compile Include="ARM\FileMaker.cs" />
+    <Compile Include="ARM\NetworkSecurityGroupRules.cs" />
+    <Compile Include="ARM\ResourceClasses\AAD.cs" />
+    <Compile Include="ARM\ResourceClasses\AKSCluster.cs" />
+    <Compile Include="ARM\ResourceClasses\AKSWithACR.cs" />
+    <Compile Include="ARM\ResourceClasses\AppGateway.cs" />
+    <Compile Include="ARM\ResourceClasses\ResourceBase.cs" />
+    <Compile Include="ARM\ResourceClasses\SQLDB.cs" />
+    <Compile Include="ARM\ResourceClasses\SubnetAddToVNet.cs" />
+    <Compile Include="ARM\ResourceClasses\VMAddtoVNet.cs" />
+    <Compile Include="ARM\TemplateAutoScaler.cs" />
+    <Compile Include="ARM\TemplateAutoScalerRules.cs" />
+    <Compile Include="ARM\TemplateRegion.cs" />
+    <Compile Include="ARM\TemplateRegionCommon.cs" />
+    <Compile Include="ARM\TemplateRegionFunctionParameters.cs" />
+    <Compile Include="ARM\TemplateRegionFunctions.cs" />
+    <Compile Include="ARM\TemplateRegionOutputs.cs" />
+    <Compile Include="ARM\TemplateRegionParameterAllowedValues.cs" />
+    <Compile Include="ARM\TemplateRegionParameters.cs" />
+    <Compile Include="ARM\TemplateRegionResource.cs" />
+    <Compile Include="ARM\TemplateRegionResourceCopy.cs" />
+    <Compile Include="ARM\TemplateRegionResourceCopyInputFields.cs" />
+    <Compile Include="ARM\TemplateRegionResourceDependsOn.cs" />
+    <Compile Include="ARM\TemplateRegionResourceProperties.cs" />
+    <Compile Include="ARM\TemplateRegionResourcePropertyCopy.cs" />
+    <Compile Include="ARM\TemplateRegionResourcePropertyCopyInputFields.cs" />
+    <Compile Include="ARM\TemplateRegionResourceTags.cs" />
+    <Compile Include="ARM\TemplateRegionVariables.cs" />
+    <Compile Include="ARM\TemplateResourceProviderProperties.cs" />
+    <Compile Include="ARM\TemplateResourceProviderPropertyValues.cs" />
+    <Compile Include="ARM\TemplateResources.cs" />
+    <Compile Include="Loader.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="ProcessResult.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ARM\Snippets\ACRParameters.txt" />
+    <Content Include="ARM\Snippets\ACRResource.txt" />
+    <Content Include="ARM\Snippets\AKSWithACRParameters.txt" />
+    <Content Include="ARM\Snippets\Core\CoreAKS.txt" />
+    <Content Include="ARM\Snippets\Core\CoreAKSParams.txt" />
+    <Content Include="ARM\Snippets\AppGatewayParameters.txt" />
+    <Content Include="ARM\Snippets\AppGatewayResource.txt" />
+    <Content Include="ARM\Snippets\AppGatewayVars.txt" />
+    <Content Include="ARM\Snippets\Core\CoreRG.txt" />
+    <Content Include="ARM\Snippets\Core\CoreRGParams.txt" />
+    <Content Include="ARM\Snippets\SGR\SGRAllowPSRemoting.txt" />
+    <Content Include="ARM\Snippets\SGR\SGRAllowRD.txt" />
+    <Content Include="ARM\Snippets\SGR\SGRAllowSyncWithAzureAD.txt" />
+    <Content Include="ARM\Snippets\SGR\SGRHTTPS.txt" />
+    <Content Include="ARM\Snippets\DockerComplete.txt" />
+    <Content Include="ARM\Snippets\AKSClusterOutput.txt" />
+    <Content Include="ARM\Snippets\AKSClusterParameters.txt" />
+    <Content Include="ARM\Snippets\Defn\StorageDefn.txt" />
+    <Content Include="ARM\Snippets\AADParameters.txt" />
+    <Content Include="ARM\Snippets\AADResource.txt" />
+    <Content Include="ARM\Snippets\Defn\AKSClusterParametersDefn.txt" />
+    <Content Include="ARM\Snippets\Defn\DockerParametersDefn.txt" />
+    <Content Include="ARM\Snippets\DockerResource.txt" />
+    <Content Include="ARM\Snippets\AKSClusterResource.txt" />
+    <Content Include="ARM\Snippets\RedisCacheResource.txt" />
+    <Content Include="ARM\Snippets\PolicyAPIJWT.txt" />
+    <Content Include="ARM\Snippets\RedisCacheParameters.txt" />
+    <Content Include="ARM\Snippets\Defn\RedisCacheParametersDefn.txt" />
+    <Content Include="ARM\Snippets\Defn\StorageParametersDefn.txt" />
+    <Content Include="ARM\Snippets\SGR\SGRHTTP.txt" />
+    <Content Include="ARM\Snippets\SGR\SGRSSH.txt" />
+    <Content Include="ARM\Snippets\SQLDBParameters.txt" />
+    <Content Include="ARM\Snippets\SQLDBResource.txt" />
+    <Content Include="ARM\Snippets\SQLDBVariables.txt" />
+    <Content Include="ARM\Snippets\StorageResource.txt" />
+    <Content Include="ARM\Snippets\StorageParameters.txt" />
+    <Content Include="ARM\Snippets\AKSWithACRResource.txt" />
+    <Content Include="ARM\Snippets\AKSWithACROutput.txt" />
+    <Content Include="ReadMe.txt" />
+    <None Include="ARM\Snippets\VMAddtoVNetParameters.txt" />
+    <None Include="ARM\Snippets\VMAddtoVNetResource.txt" />
+    <Content Include="ARM\Snippets\SubnetAddToVNetParameters.txt" />
+    <Content Include="ARM\Snippets\SubnetAddToVNetResource.txt" />
+    <Content Include="ARM\Snippets\VMAddtoVNetOutput.txt" />
+    <Content Include="ARM\Snippets\VMAddtoVNetVars.txt" />
+    <Content Include="ARM\Snippets\VNet1SubResource.txt" />
+    <Content Include="ARM\Snippets\VNet1SubParameters.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ARM\Snippets\template\VMAddtoVNetParametersWithDefaults.json" />
+    <None Include="ARM\Snippets\template\VMAddtoVNetResource.json" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

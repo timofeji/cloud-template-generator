@@ -1,0 +1,29 @@
+﻿	{
+	  "type": "Microsoft.Cache/Redis",
+	  "apiVersion":  "[parameters('apiVersion')]",
+	  "name": "[parameters('redisCacheName')]",
+	  "location": "[parameters('redisCacheLocation')]",
+	  "properties": {
+		"enableNonSslPort": "[parameters('enableNonSslPort')]",
+		"sku": {
+		  "capacity": "[parameters('redisCacheCapacity')]",
+		  "family": "[parameters('redisCacheFamily')]",
+		  "name": "[parameters('redisCacheSKU')]"
+		}
+	  },
+	  "resources": [
+		{
+		  "type": "Microsoft.Cache/redis/providers/diagnosticsettings",
+		  "apiVersion": "[parameters('apiVersion')]",
+		  "name": "[concat(parameters('redisCacheName'), '/Microsoft.Insights/service')]",
+		  "location": "[parameters('redisCacheLocation')]",
+		  "dependsOn": [
+			"[concat('Microsoft.Cache/Redis/', parameters('redisCacheName'))]"
+		  ],
+		  "properties": {
+			"status": "[parameters('diagnosticsStatus')]",
+			"storageAccountName": "[parameters('existingDiagnosticsStorageAccountName')]"
+		  }
+		}
+	  ]
+	}

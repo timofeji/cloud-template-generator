@@ -1,0 +1,9 @@
+﻿	{
+      "apiVersion": [parameters('ApiVersion')],
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "name": "[concat(parameters('existingVNETName'), '/', parameters('newSubnetName'))]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "addressPrefix": "[parameters('newSubnetAddressPrefix')]"
+      }
+    }

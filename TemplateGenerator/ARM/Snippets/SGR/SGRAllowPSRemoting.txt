@@ -1,0 +1,13 @@
+﻿                    {
+                        "name": "AllowPSRemoting",
+                        "properties": {
+                            "access": "Allow",
+                            "priority": 301,
+                            "direction": "Inbound",
+                            "protocol": "Tcp",
+                            "sourceAddressPrefix": "AzureActiveDirectoryDomainServices",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "5986"
+                        }
+                    }

@@ -1,0 +1,5 @@
+﻿	"existingVNETName":  ***VNetName***,
+    "newSubnetName": ***newSubnetName***,
+    "newSubnetAddressPrefix": ***subnetAddressPrefix***,
+	"apiVersion": ***apiVersion***,
+    "location":  ***location***,
